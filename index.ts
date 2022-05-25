@@ -1,16 +1,16 @@
 import { BigDecimal } from './BigDecimal.ts'
 
 function rla_confidence(
-  total_votes: bigint,
-  margin_of_error: bigint,
-  num_checked: bigint
+  total_votes: number,
+  margin_of_error: number,
+  num_checked: number
 ): number {
-  return (
-    1 -
-    NchooseR(total_votes - margin_of_error, num_checked).divide(
-      NchooseR(total_votes, num_checked)
-    )
-  )
+  const [total, margin, checked] = [
+    total_votes,
+    margin_of_error,
+    num_checked,
+  ].map(BigInt)
+  return 1 - NchooseR(total - margin, checked).divide(NchooseR(total, checked))
 }
 
 // Equivalent to COMBIN function from gSheets
@@ -43,11 +43,6 @@ const cases = [
   [georgia_votes, georgia_margin, 10000], // 99.9992%
 ]
 
-cases
-  .map((c) => c.map(BigInt))
-  .map(([t, m, c]) =>
-    console.log(
-      [t, m, c].map(Number),
-      `${(rla_confidence(t, m, c) * 100).toFixed(4)}%`
-    )
-  )
+cases.map(([t, m, c]) =>
+  console.log([t, m, c], `${(rla_confidence(t, m, c) * 100).toFixed(4)}%`)
+)

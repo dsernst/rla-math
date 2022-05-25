@@ -38,6 +38,9 @@ const cases = [
   [georgia_votes, georgia_margin, 10], // Correct: 1.17%
   [georgia_votes, georgia_margin, 100], // 11.12%
   [georgia_votes, georgia_margin, 1000], // 69.23%
+  [georgia_votes, georgia_margin, 5000], // 99.7248%
+  [georgia_votes, georgia_margin, 7500], // 99.9856%
+  [georgia_votes, georgia_margin, 10000], // 99.9992%
 ]
 
 cases
@@ -45,6 +48,6 @@ cases
   .map(([t, m, c]) =>
     console.log(
       [t, m, c].map(Number),
-      `${(rla_confidence(t, m, c) * 100).toFixed(2)}%`
+      `${(rla_confidence(t, m, c) * 100).toFixed(4)}%`
     )
   )

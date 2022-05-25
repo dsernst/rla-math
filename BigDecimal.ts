@@ -1,7 +1,7 @@
 type AcceptableTypes = number | bigint | BigDecimal | string
 
 // Adapted from https://stackoverflow.com/a/66939244/2348750
-class BigDecimal {
+export class BigDecimal {
   // Configuration: constants
   static DECIMALS = 18 // number of decimals on all instances
   static ROUNDED = false // numbers are truncated (false) or rounded (true)
@@ -10,7 +10,7 @@ class BigDecimal {
 
   constructor(value: AcceptableTypes) {
     if (value instanceof BigDecimal) return value
-    let [ints, decis] = String(value).split('.').concat('')
+    const [ints, decis] = String(value).split('.').concat('')
     this._n =
       BigInt(
         ints +
@@ -55,9 +55,11 @@ class BigDecimal {
 }
 
 // Demo
-var a = new BigDecimal('123456789123456789876')
-var b = a.divide('10000000000000000000')
-var c = b.add('9.000000000000000004')
-console.log(b.toString())
-console.log(c.toString())
-console.log(+c) // loss of precision when converting to number
+// const a = new BigDecimal('123456789123456789876')
+// const b = a.divide('10000000000000000000')
+// const c = b.add('9.000000000000000004')
+// console.log(b.toString())   // 12.345678912345678987
+// console.log(c.toString())   // 21.345678912345678991
+
+// loss of precision when converting to number:
+// console.log(+c) // 21.34567891234568
